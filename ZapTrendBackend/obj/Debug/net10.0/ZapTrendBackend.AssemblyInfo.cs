@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZapTrendBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+592aba5337fe1e92d9cd8aa7e3fe0b6783ccf353")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee5289eecc89e534dd8cee98b8e8c2ffc327c873")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZapTrendBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZapTrendBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
