@@ -27,6 +27,6 @@ Zap Trend es una aplicacion la cual permite a cualquier negocio implementar su p
 
 Se requiere tener las siguientes herramientas...
 
->[!IMPORTANT]
+>[!WARNING]
 >
 >El programa se encuentra en `WIP`
