@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ZapTrendBackend.Domain.Entities;
 using ZapTrendBackend.Model.Enums;
 using ZapTrendBackend.Model.ValueObjects;
 
@@ -9,20 +10,25 @@ namespace ZapTrendBackend.Model.Entities
     public class User
     {
         // Atributos de clase (Campos privados)
-        private int id;
-        public UserName Username;
-        private string passwordHash;
-        public Name Name { get; }
-        public SecondName SecondName { get; }
-        private DocumentType documentType;
-        public Document Document { get; }
-        private DateTime birthday;
-        public Phone Phone { get; }
-        public Mail Mail { get; }
-        private Association association;
+        //private readonly List<Role> roles = new();
 
-        // Constructor: Lo hacemos 'internal' para que solo el Builder de esta capa pueda usarlo directamente
-        internal User(int id, UserName username, string passwordHash, Name name, SecondName secondName, DocumentType documentType, Document document, DateTime birthday, Phone phone,Mail mail, Association association)
+        public Guid Id { get; private set; }
+        public UserName Username { get; private set; }
+        public string PasswordHash { get; private set; }
+        public Name Name { get; private set; }
+        public SecondName? SecondName { get; private set; }
+        public DocumentType DocumentType { get; private set; }
+        public Document Document { get; private set; }
+        public DateTime Birthday { get; private set; }
+        public Phone Phone { get; private set; }
+        public Mail Mail { get; private set; }
+
+        // public IReadOnlyCollection<Role> Roles => roles.AsReadOnly();
+        public List<Role> Roles { get; private set; }
+        public Association? Association { get; private set; }
+
+        // Constructor...
+        public User(Guid id, UserName username, string passwordHash, Name name, SecondName secondName, DocumentType documentType, Document document, DateTime birthday, Phone phone, Mail mail, List<Role> roles, Association association)
         {
             Id = id;
             Username = username;
@@ -34,35 +40,49 @@ namespace ZapTrendBackend.Model.Entities
             Birthday = birthday;
             Phone = phone;
             Mail = mail;
+            Roles = roles;
             Association = association;
         }
 
-        // Getters y Setters con validaciones
-        public int Id { get => id; set => id = value; }
-
-        public string PasswordHash
+        public void ChangePassword(string passwordHash)
         {
-            get => passwordHash;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El hash de contraseña de Usuario no puede estar vacío");
-                passwordHash = value;
-            }
-        }
-        public DocumentType DocumentType { get => documentType; set => documentType = value; }
+            if (string.IsNullOrWhiteSpace(passwordHash))
+                throw new ArgumentException(
+                    "El hash de contraseña no puede estar vacío.");
 
-        public DateTime Birthday
-        {
-            get => birthday;
-            set
-            {
-                if (value >= DateTime.Now)
-                    throw new ArgumentException("La fecha de nacimiento de Usuario no puede ser en el futuro");
-                birthday = value;
-            }
+            PasswordHash = passwordHash;
         }
-        public Association Association { get => association; set => association = value; }
+
+        public void ChangePhone(Phone phone)
+        {
+            Phone = phone;
+        }
+
+        public void ChangeMail(Mail mail)
+        {
+            Mail = mail;
+        }
+
+        public void AddRole(Role role)
+        {
+            if (Roles.Contains(role))
+                return;
+
+            Roles.Add(role);
+        }
+
+        public void RemoveRole(Role role)
+        {
+            if (!Roles.Any())
+                throw new InvalidOperationException("El usuario no puede quedar sin rol, agregue el nuevo rol y elimine el anterior");
+            Roles.Remove(role);
+        }
+
+        public void ChangeAssociation(Association association)
+        {
+            Association = association;
+        }
+
 
     }
 
@@ -75,7 +95,7 @@ namespace ZapTrendBackend.Model.Entities
         private static readonly int DefalutAge = 18;
 
         //Se inicializan los atributos
-        private int id;
+        private Guid id;
         private UserName? username;
         private string passwordHash;
         private Name? name;
@@ -85,6 +105,7 @@ namespace ZapTrendBackend.Model.Entities
         private DateTime birthday; // Valor por defecto
         private Phone? phone;
         private Mail? mail;
+        private List<Role>? roles;
         private Association? association;
 
         // Constructor
@@ -96,7 +117,7 @@ namespace ZapTrendBackend.Model.Entities
         // Métodos del Builder
         public UserBuilder Reset()
         {
-            id = 0;
+            id = new Guid();
             username = null;
             passwordHash = string.Empty;
             name = null;
@@ -106,12 +127,13 @@ namespace ZapTrendBackend.Model.Entities
             birthday = DateTime.Now.AddYears(-DefalutAge);
             phone = null;
             mail = null;
+            roles = null;
             association = null;
 
             return this;
         }
 
-        public UserBuilder WithId(int id)
+        public UserBuilder WithId(Guid id)
         {
             this.id = id;
             return this;
@@ -161,6 +183,12 @@ namespace ZapTrendBackend.Model.Entities
             return this;
         }
 
+        public UserBuilder WithRoles(List<Role> roles) {
+            this.roles = roles;
+
+            return this;
+        }
+
         public UserBuilder WithAssociation(Association association)
         {
             this.association = association;
@@ -171,20 +199,19 @@ namespace ZapTrendBackend.Model.Entities
         public User Build()
         {
             if (username is null)
-                throw new InvalidOperationException(
-                    "El Username es requerido para construir el Usuario.");
+                throw new InvalidOperationException("El Username es requerido para construir el Usuario.");
 
             if (string.IsNullOrWhiteSpace(passwordHash))
-                throw new InvalidOperationException(
-                    "El PasswordHash es requerido.");
+                throw new InvalidOperationException("El PasswordHash es requerido.");
 
             if (name is null)
-                throw new InvalidOperationException(
-                    "El Nombre es requerido.");
+                throw new InvalidOperationException("El Nombre es requerido.");
 
             if (mail is null)
-                throw new InvalidOperationException(
-                    "El Correo es requerido.");
+                throw new InvalidOperationException("El Correo es requerido.");
+
+            if (id.Equals(new Guid()))
+                id = Guid.NewGuid();
 
             return new User(
                 id,
@@ -197,6 +224,7 @@ namespace ZapTrendBackend.Model.Entities
                 birthday,
                 phone,
                 mail,
+                roles,
                 association
             );
         }

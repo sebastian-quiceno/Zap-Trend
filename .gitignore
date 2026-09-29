@@ -1,0 +1,6 @@
+# Visual Studio
+ZapTrendBackend/.vs/
+
+# .NET build
+ZapTrendBackend/bin/
+ZapTrendBackend/obj/
