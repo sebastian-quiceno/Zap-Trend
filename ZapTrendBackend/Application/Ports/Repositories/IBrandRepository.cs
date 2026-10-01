@@ -13,7 +13,10 @@ namespace ZapTrendBackend.Application.Adapters.Repositories
 
         Task<IEnumerable<Brand>> GetAllAsync();
 
-        Task<bool> DeleteAsync(Guid id);
+        Task UpdateAsync(Brand brand);
+        Task<bool> DeleteByIdAsync(Guid id);
+
+        Task<bool> ExistsByIdAsync(Guid id);
 
         Task<bool> ExistsByNameAsync(string name);
     }

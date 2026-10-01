@@ -8,6 +8,6 @@ namespace ZapTrendBackend.Application.Ports.Security
 {
     public interface IAuthorizationService
     {
-        Task<AuthorizationResponseDTO> AuthorizeAsync(string permission, CancellationToken cancellationToken = default);
+        Task AuthorizeAsync(string permission, CancellationToken cancellationToken = default);
     }
 }

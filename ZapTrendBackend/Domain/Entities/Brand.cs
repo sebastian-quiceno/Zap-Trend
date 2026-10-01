@@ -23,5 +23,9 @@ namespace ZapTrendBackend.model.Entities
         public static Brand Recreate(Guid id, Name name) {
             return new Brand(id, name);
         }
+
+        public void ChangeName(Name name) {
+            Name = name;
+        }
     }
 }

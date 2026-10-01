@@ -5,9 +5,9 @@ using ZapTrendBackend.Model.Primitives;
 
 namespace ZapTrendBackend.Domain.Exceptions.Authorization
 {
-    internal class UnauthorizedAccessException : DomainException
+    internal class NotAuthenticatedException : DomainException
     {
-        public UnauthorizedAccessException(string message) : base(message)
+        public NotAuthenticatedException(string message) : base(message)
         {
         }
     }
