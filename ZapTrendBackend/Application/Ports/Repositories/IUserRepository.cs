@@ -9,14 +9,14 @@ namespace ZapTrendBackend.Application.Adapters.Repositories
     public interface IUserRepository
     {
 
-        Task<User> SaveAsync(User user);
-        Task<User> GetByIdAsync(int id);
-        Task<User> GetByUserNameAsync(string username);
-        Task<List<User>> GetAllASync();
-        Task<bool> deleteByID(int id);
-        Task<bool> ExistByUsername(string username);
-        Task<bool> ExistByEmail(string mail);
-        Task<bool> ExistByDocument(string document, DocumentType documentType);
+        Task<User> SaveAsync(User user, CancellationToken cancellationToken);
+        Task<User> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task<User> GetByUserNameAsync(string username, CancellationToken cancellationToken);
+        Task<List<User>> GetAllASync(CancellationToken cancellationToken);
+        Task<bool> deleteByID(int id, CancellationToken cancellationToken);
+        Task<bool> ExistByUsername(string username, CancellationToken cancellationToken);
+        Task<bool> ExistByEmail(string mail, CancellationToken cancellationToken);
+        Task<bool> ExistByDocument(string document, DocumentType documentType, CancellationToken cancellationToken);
 
     }
 }

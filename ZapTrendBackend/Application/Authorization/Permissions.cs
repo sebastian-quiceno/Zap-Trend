@@ -13,6 +13,13 @@ namespace ZapTrendBackend.Application.Authorization
             public const string Delete = "brands.delete";
 
         }
+        public static class ProductTypes
+        {
+            public const string Read = "products.read";
+            public const string Create = "products.create";
+            public const string Update = "products.update";
+            public const string Delete = "products.delete";
+        }
 
         public static class Products
         {

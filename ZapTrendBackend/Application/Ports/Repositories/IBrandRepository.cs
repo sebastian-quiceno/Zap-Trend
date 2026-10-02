@@ -7,17 +7,17 @@ namespace ZapTrendBackend.Application.Adapters.Repositories
 {
     public  interface IBrandRepository
     {
-        Task<Brand> SaveAsync(Brand brand);
+        Task<Brand> SaveAsync(Brand brand, CancellationToken cancellationToken);
 
-        Task<Brand?> GetByIdAsync(Guid id);
+        Task<Brand?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
-        Task<IEnumerable<Brand>> GetAllAsync();
+        Task<IEnumerable<Brand>> GetAllAsync(CancellationToken cancellationToken);
 
-        Task UpdateAsync(Brand brand);
-        Task<bool> DeleteByIdAsync(Guid id);
+        Task UpdateAsync(Brand brand, CancellationToken cancellationToken);
+        Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken);
 
-        Task<bool> ExistsByIdAsync(Guid id);
+        Task<bool> ExistsByIdAsync(Guid id, CancellationToken cancellationToken);
 
-        Task<bool> ExistsByNameAsync(string name);
+        Task<bool> ExistsByNameAsync(string name, CancellationToken cancellationToken);
     }
 }

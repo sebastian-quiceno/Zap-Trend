@@ -12,25 +12,25 @@ namespace ZapTrendBackend.Application.Brands
 {
     public class UpdateBrandUseCase
     {
-        private IBrandRepository brandRepository;
-        private IAuthorizationService authorizationService;
+        private readonly IBrandRepository brandRepository;
+        private readonly IAuthorizationService authorizationService;
 
         public UpdateBrandUseCase(IBrandRepository brandRepository, IAuthorizationService authorizationService) {
             this.brandRepository = brandRepository;
             this.authorizationService = authorizationService;
         }
 
-        public async Task Excecute(Guid id, Name newName, CancellationToken cancellationToken) {
+        public async Task ExecuteAsync(Guid id, Name newName, CancellationToken cancellationToken) {
             await authorizationService.AuthorizeAsync(Permissions.Brand.Update, cancellationToken);
 
-            Brand? brand = await brandRepository.GetByIdAsync(id);
+            Brand? brand = await brandRepository.GetByIdAsync(id, cancellationToken);
 
             if (brand is null)
                 throw new BrandNotFoundException("La marca no existe.");
 
             brand.ChangeName(newName);
 
-            await brandRepository.UpdateAsync(brand);
+            await brandRepository.UpdateAsync(brand, cancellationToken);
         }
     }
 }

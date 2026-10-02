@@ -9,10 +9,10 @@ namespace ZapTrendBackend.Application.Adapters.Repositories
 {
     public interface ISizeRepository
     {
-        Task<Size> SaveAsync(User user);
-        Task<Size> GetByIdAsync(int id);
-        Task<List<Size>> GetAllASync();
-        Task<bool> DeleteByIDAsync(int id); 
+        Task<Size> SaveAsync(User user, CancellationToken cancellationToken);
+        Task<Size> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task<List<Size>> GetAllASync(CancellationToken cancellationToken);
+        Task<bool> DeleteByIDAsync(int id, CancellationToken cancellationToken); 
 
     }
 }

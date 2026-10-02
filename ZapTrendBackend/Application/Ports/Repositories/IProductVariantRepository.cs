@@ -8,10 +8,10 @@ namespace ZapTrendBackend.Application.Adapters.Repositories
 {
     public interface IProductVariantRepository
     {
-        Task<ProductVariant> SaveAsync(ProductVariant productVariant);
-        Task<ProductVariant> GetByIdAsync(int id);
-        Task<List<ProductVariant>> GetAllASync();
-        Task<bool> DeleteByIDAsync(int id);
+        Task<ProductVariant> SaveAsync(ProductVariant productVariant, CancellationToken cancellationToken);
+        Task<ProductVariant> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task<List<ProductVariant>> GetAllASync(CancellationToken cancellationToken);
+        Task<bool> DeleteByIDAsync(int id, CancellationToken cancellationToken);
 
 
     }

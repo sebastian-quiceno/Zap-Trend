@@ -21,11 +21,11 @@ namespace ZapTrendBackend.Application.Brands
             this.authorizationService = authorizationService;
         }
 
-        public async Task Execute(Guid id, CancellationToken cancellationToken)
+        public async Task ExecuteAsync(Guid id, CancellationToken cancellationToken)
         {
             await authorizationService.AuthorizeAsync(Permissions.Brand.Delete, cancellationToken);
 
-            await brandRepository.DeleteByIdAsync(id);
+            await brandRepository.DeleteByIdAsync(id, cancellationToken);
         }
     }
 }

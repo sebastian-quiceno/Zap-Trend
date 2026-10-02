@@ -9,8 +9,8 @@ namespace ZapTrendBackend.model.Entities
     {
         //Atributos clase
         public Guid Id { get; }
-        public Name Name { get; }
-        public Description Description { get; }
+        public Name Name { get; private set; }
+        public Description Description { get; private set; }
 
         //Constructor
         private ProductType(Guid id, Name name, Description description)
@@ -26,6 +26,15 @@ namespace ZapTrendBackend.model.Entities
 
         public static ProductType Recreate(Guid id, Name name, Description description) {
             return new ProductType(id, name, description);
+        }
+
+        public void ChangeName(Name name) {
+            Name = name;
+        }
+
+        public void ChangeDescription(Description description)
+        {
+            Description = description;
         }
     }
 }
