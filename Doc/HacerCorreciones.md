@@ -1,7 +1,7 @@
 # Documento para Registrar **Mejoras y Correcciones** futuras
 
 ### 1. Agregar *authorization* Administradores: 
-> [!IMPORTANT]
+> [!WARNING] Cuidado
 > Limitar la modificacion de los productos para que solo de la marca puedan modificarlos
 
 ### 2. Revisar *Encapsulamiento* de las exepciones 
