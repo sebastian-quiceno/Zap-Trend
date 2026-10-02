@@ -10,13 +10,16 @@ namespace ZapTrendBackend.model.Entities
 
         //Atributos de la clase
         public Guid Id { get; private set; }
-        public Name Name { get; }
+        public Name Name { get; private set; }
         private Brand brand;
         private ProductType productType;
 
         //Constructor
         private Product(Guid id, Name name, Brand brand, ProductType productType)
         {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
             Id = id;
             Name = name;
             Brand = brand;
@@ -24,17 +27,20 @@ namespace ZapTrendBackend.model.Entities
         }
 
         //Getters y Setters
-        public Brand Brand
-        {
-            get; 
-            set => field = value is null ? value :
-                                  throw new ArgumentException($"La marca del producto no puede ser null");
+        public Brand Brand{
+            get => brand;
+            private set{
+                if (value is null)
+                    throw new ArgumentException($"La marca del producto no puede ser null");
+                brand = value;
+            }
         }
-        public ProductType ProductType { get => productType; 
-            set{ 
+        public ProductType ProductType { 
+            get => productType; 
+            private set{ 
                 if(value is null)
                     throw new ArgumentException($"El tipo de producto de Producto no puede ser null");
-                ProductType = value;
+                productType = value;
             }
         }
 
@@ -48,5 +54,8 @@ namespace ZapTrendBackend.model.Entities
             return new Product(id, name, brand, productType);
         }
 
+        public void ChangeName(Name name) {
+            Name = name;
+        }
     }
 }

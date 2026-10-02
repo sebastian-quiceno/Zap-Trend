@@ -11,7 +11,7 @@ namespace ZapTrendBackend.Application.Adapters.Repositories
     public interface IProductTypeRepository
     {
         Task<ProductType> SaveAsync(ProductType productType, CancellationToken cancellationToken);
-        Task<ProductType> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<ProductType?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
         Task<List<ProductType>> GetAllASync(CancellationToken cancellationToken);
         Task<bool> deleteByID(Guid id, CancellationToken cancellationToken);
         Task<bool> ExistByName(Name name, CancellationToken cancellationToken);
